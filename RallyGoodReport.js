@@ -11,7 +11,10 @@ function onLoad() {
     				BURN_DOWN : "burndown"
     			},
                 Attributes : {
-                    STATE : "state"
+                    STATE : "State"
+                },
+                Buttons : {
+                	GO_BTN : "Go!"
                 }
     		}
     	},
@@ -29,15 +32,19 @@ function onLoad() {
                 },
                 pieChart = new rally.sdk.ui.PieChart(pieConfig, rallyDataSource);
 
+            pieChart.addEventListener("onSliceClick", GoodRallyReportHelpers.Events.ClickEvent.OnPieSliceClicked);
 	        pieChart.display(GoodRallyReportProperties.Consts.PIE_CHART);
     	},
     	displayCategories = function() {
     		var dialog = new rally.sdk.ui.basic.Dialog({ 
             	title: "Select a category",
 				width: 300, 
-				content: "	<div id='categories'><h1 class='rally-good-title'>Categorise by:</h1><select class='categories-dropdown'><option value='severity'>Severity</option><option value='priority'>Priority *COMING SOON*</option><option value='owner'>Owner *COMING SOON*</option></select><button class='rally-good'>Go!</button></div>"
+				content: "	<div id='categories'><h1 class='rally-good-title'>Categorise by:</h1><select class='categories-dropdown'><option value='severity'>Severity</option><option value='priority'>Priority *COMING SOON*</option><option value='owner'>Owner *COMING SOON*</option></select></div>",
+                closable: true,
+                buttons: [GoodRallyReportProperties.Consts.Buttons.GO_BTN]
 			});
 
+    		dialog.addEventListener("onButtonClick", GoodRallyReportHelpers.Events.ClickEvent.OnDialogButtonClicked);
 			dialog.display();
     	},
 	 	GoodRallyReportHelpers = {
@@ -68,17 +75,26 @@ function onLoad() {
     					if (chartType === GoodRallyReportProperties.Consts.ChartOptions.BURN_DOWN) {
 
     					}
-    				},
-    				FirstClicked : function() {
-    					displayCategories();
     				}
-    			}
+    			},
+    			
+    			ClickEvent : {
+                    OnPieSliceClicked : function(p, eventArgs) {
+                        displayCategories();
+                    },
+                    OnDialogButtonClicked : function(dialog, eventArgs) {
+                    	if (eventArgs.button === GoodRallyReportProperties.Consts.Buttons.GO_BTN) {
+                    		// TODO:
+                    	}
+                    	
+                    	dialog.destroy();
+                    }
+                }
     		},
 
     	};
 
     $(".btn-Generate-nav-chart").click(GoodRallyReportHelpers.Events.ButtonEvent.GenerateNavChartClicked);
-    $(".categories-button").click(GoodRallyReportHelpers.Events.ButtonEvent.FirstClicked);
 
 }
 rally.addOnLoad(onLoad);
