@@ -6,8 +6,10 @@
 	/* MOVE ALL BELOW INTO THE DIV ABOVE AFTER FINISHING */
 
     h1.rally-good-title {
-    	font-size: 22px;
+    	font-family: ProximaNovaSemiBold,Helvetica,Arial;
+    	font-size: 24px;
     	text-align: center;
+    	font-variant: small-caps;
     }
 
     p {
@@ -54,6 +56,7 @@
 
     select {
     	height: 25px;
+    	background: #F4F4F4;
     }
 
     option {
@@ -62,4 +65,10 @@
 
     select.categories-dropdown {
     	margin-right: 15px;
+    }
+
+    .dijitDialogTitleBar {
+    	background: #F4F4F4 !important;
+    	font-family: NotoSans,Helvetica,Arial !important;
+    	font-size: 14px !important;
     }
