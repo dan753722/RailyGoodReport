@@ -31,7 +31,6 @@
     	display: inline-block;
     	color: white;
 		padding: 2px 8px;
-		
 		font-size: 14px;
 		font-weight: 400;
 		line-height: 1.42857143;
@@ -55,6 +54,10 @@
 
     select {
     	height: 25px;
+    }
+
+    option {
+    	line-height: 25px;
     }
 
     select.categories-dropdown {
