@@ -6,17 +6,58 @@
 	/* MOVE ALL BELOW INTO THE DIV ABOVE AFTER FINISHING */
 
     h1.rally-good-title {
-    	font-family: NotoSans,Helvetica,Arial;
     	font-size: 22px;
     	text-align: center;
+    }
+
+    p {
+    	font-family: NotoSans,Helvetica,Arial;
+    	font-size: 14px;
     }
 
     .options-container {
     	margin: 0 auto;
     	width: 900px;
+    	height: 100px;
     }
 
     .options-block {
     	float: left;
     	margin: 0 10px;
+    	height: 100%;
+    }
+
+    button.rally-good {
+    	display: inline-block;
+    	color: white;
+		padding: 2px 8px;
+		
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 1.42857143;
+		text-align: center;
+		white-space: nowrap;
+		cursor: pointer;
+		background-image: none;
+		background: #337EC6;
+		border: 1px solid transparent;
+		border-radius: 4px;
+    }
+
+    button.first {
+    	margin-top: 13px;
+    }
+
+    .categories {
+    	clear: both;
+    	padding-top: 50px;
+    	text-align: center;
+    }
+
+    select {
+    	height: 25px;
+    }
+
+    select.categories-dropdown {
+    	margin-right: 15px;
     }
