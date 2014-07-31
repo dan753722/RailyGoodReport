@@ -9,22 +9,26 @@ function onLoad() {
     				BAR 	  : "bar",
     				LINE 	  : "line",
     				BURN_DOWN : "burndown"
-    			}
+    			},
+                Attributes : {
+                    STATE : "state"
+                }
     		}
     	},
-    	ShowPie = function() {
+    	ShowPie = function(objectType, selectedAttribute) {
     		var rallyDataSource = new rally.sdk.data.RallyDataSource('__WORKSPACE_OID__',
                                '__PROJECT_OID__',
                                '__PROJECT_SCOPING_UP__',
-                               '__PROJECT_SCOPING_DOWN__');
-       		var pieConfig = {
-            	type : "Defect",
-           		attribute: "Priority",
-           		title : "Defects by Priority",
-           		height : 200,
-           		width : 200
-         	};
-       		var pieChart = new rally.sdk.ui.PieChart(pieConfig, rallyDataSource);
+                               '__PROJECT_SCOPING_DOWN__'),
+       		    pieConfig = {
+                    type : objectType,
+                    attribute: selectedAttribute,
+                    title : objectType + " by " + selectedAttribute,
+                    height : 200,
+                    width : 200
+                },
+                pieChart = new rally.sdk.ui.PieChart(pieConfig, rallyDataSource);
+
 	        pieChart.display(GoodRallyReportProperties.Consts.PIE_CHART);
     	},
 	 	GoodRallyReportHelpers = {
@@ -33,7 +37,7 @@ function onLoad() {
     					$(".charts div").addClass(GoodRallyReportProperties.Consts.PIE_CHART)
     									.attr("id", GoodRallyReportProperties.Consts.PIE_CHART);
 
-    					ShowPie();
+    					ShowPie($(".object-type-option").val(), GoodRallyReportProperties.Consts.Attributes.STATE);
     			}
     		},
     		Events : {
