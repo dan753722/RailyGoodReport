@@ -1,21 +1,3 @@
-function displayCategories() {
-            
-    var config = { 
-            title: "Hello World",
-			width: 300, id:"helloWorld",
-			content: "<div>Hello World!</div>"
-			}
-
-	var dialog = new rally.sdk.ui.basic.Dialog({ 
-            title: "Hello World",
-			width: 300, id:"helloWorld",
-			content: "<div>Hello World!</div>"
-			})
-
-	}
-
-	dialog.display;
-}
 function onLoad() {
     //Add app code here
     var self = this,
@@ -45,6 +27,15 @@ function onLoad() {
        		var pieChart = new rally.sdk.ui.PieChart(pieConfig, rallyDataSource);
 	        pieChart.display(GoodRallyReportProperties.Consts.PIE_CHART);
     	},
+    	displayCategories = function() {
+    		var dialog = new rally.sdk.ui.basic.Dialog({ 
+            	title: "Select a category",
+				width: 300, 
+				content: "	<div id='categories'><h1 class='rally-good-title'>Categorise by:</h1><select class='categories-dropdown'><option value='severity'>Severity</option><option value='priority'>Priority *COMING SOON*</option><option value='owner'>Owner *COMING SOON*</option></select><button class='rally-good'>Go!</button></div>"
+			});
+
+			dialog.display();
+    	},
 	 	GoodRallyReportHelpers = {
     		Helpers : {
 				GenerateNavPie: function() {
@@ -73,6 +64,9 @@ function onLoad() {
     					if (chartType === GoodRallyReportProperties.Consts.ChartOptions.BURN_DOWN) {
 
     					}
+    				},
+    				FirstClicked : function() {
+    					displayCategories();
     				}
     			}
     		},
@@ -80,6 +74,7 @@ function onLoad() {
     	};
 
     $(".btn-Generate-nav-chart").click(GoodRallyReportHelpers.Events.ButtonEvent.GenerateNavChartClicked);
+    $(".categories-button").click(GoodRallyReportHelpers.Events.ButtonEvent.FirstClicked);
 
 }
 rally.addOnLoad(onLoad);

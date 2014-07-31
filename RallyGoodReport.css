@@ -27,7 +27,7 @@
     	height: 100%;
     }
 
-    button.rally-good {
+    button {
     	display: inline-block;
     	color: white;
 		padding: 2px 8px;
@@ -44,13 +44,12 @@
 		border-radius: 4px;
     }
 
-    button.first {
+    button.btn-Generate-nav-chart {
     	margin-top: 13px;
     }
 
     #categories {
     	clear: both;
-    	padding-top: 50px;
     	text-align: center;
     }
 
