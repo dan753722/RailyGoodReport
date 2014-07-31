@@ -31,6 +31,15 @@ function onLoad() {
 
 	        pieChart.display(GoodRallyReportProperties.Consts.PIE_CHART);
     	},
+    	displayCategories = function() {
+    		var dialog = new rally.sdk.ui.basic.Dialog({ 
+            	title: "Select a category",
+				width: 300, 
+				content: "	<div id='categories'><h1 class='rally-good-title'>Categorise by:</h1><select class='categories-dropdown'><option value='severity'>Severity</option><option value='priority'>Priority *COMING SOON*</option><option value='owner'>Owner *COMING SOON*</option></select><button class='rally-good'>Go!</button></div>"
+			});
+
+			dialog.display();
+    	},
 	 	GoodRallyReportHelpers = {
     		Helpers : {
 				GenerateNavPie: function() {
@@ -59,6 +68,9 @@ function onLoad() {
     					if (chartType === GoodRallyReportProperties.Consts.ChartOptions.BURN_DOWN) {
 
     					}
+    				},
+    				FirstClicked : function() {
+    					displayCategories();
     				}
     			}
     		},
@@ -66,6 +78,7 @@ function onLoad() {
     	};
 
     $(".btn-Generate-nav-chart").click(GoodRallyReportHelpers.Events.ButtonEvent.GenerateNavChartClicked);
-}
+    $(".categories-button").click(GoodRallyReportHelpers.Events.ButtonEvent.FirstClicked);
 
+}
 rally.addOnLoad(onLoad);
