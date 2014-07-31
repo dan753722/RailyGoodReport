@@ -1,3 +1,22 @@
-.railyGoodReport {
+.rallyGoodReport {
     /* Add app styles here */
 }
+
+
+	/* MOVE ALL BELOW INTO THE DIV ABOVE AFTER FINISHING */
+
+    h1.rally-good-title {
+    	font-family: NotoSans,Helvetica,Arial;
+    	font-size: 22px;
+    	text-align: center;
+    }
+
+    .options-container {
+    	margin: 0 auto;
+    	width: 900px;
+    }
+
+    .options-block {
+    	float: left;
+    	margin: 0 10px;
+    }

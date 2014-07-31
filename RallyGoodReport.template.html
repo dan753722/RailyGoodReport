@@ -11,10 +11,52 @@
     <!--Include SDK-->
     <script type="text/javascript" src="https://rally1.rallydev.com/apps/1.29/sdk.js?debug=true"></script>
 
-    <script type="text/javascript" src="RailyGoodReport.js"></script>
-    <link rel="stylesheet" href="RailyGoodReport.css" type="text/css">
+    <script type="text/javascript" src="RallyGoodReport.js"></script>
+	<link rel="stylesheet" href="RallyGoodReport.css" type="text/css">
 
 </head>
-<body class="railyGoodReport">
+<body class="rallyGoodReport">
+
+	<h1 class="rally-good-title">Rally Good Reports</h1>
+
+	<div class="options-container">
+		<div class="options-block">
+			<p>Chart type: <span class="chart-options">
+				<select class="dropdown-menus">
+					<option value="pie">Pie Chart</option>
+					<option value="bar">Bar Chart *COMING SOON*</option>
+					<option value="line">Line Chart *COMING SOON*</option>
+					<option value="burndown">Burndown *COMING SOON*</option>
+				</select>
+			</span></p>
+		</div>
+
+		<div class="options-block">
+			<p>Object: <span class="options">
+				<select class="dropdown-menus">
+					<option value="defects">Defects</option>
+					<option value="user-story">User Stories *COMING SOON*</option>
+					<option value="builds">Builds *COMING SOON*</option>
+					<option value="tasks">Tasks *COMING SOON*</option>
+				</select>
+			</span></p>
+		</div>
+
+		<div class="options-block">
+			<p>Scope: <span class="options">
+				<select class="dropdown-menus">
+					<option value="this-sprint">This Sprint</option>
+					<option value="sprint1">PSI 2 Sprint 1 *COMING SOON*</option>
+					<option value="sprint2">PSI 2 Sprint 2 *COMING SOON*</option>
+				</select>
+			</span></p>
+		</div>
+
+		<div class="chart-button">
+			<button>Go!</button>
+		</div>
+
+	</div>
+
 </body>
 </html>
