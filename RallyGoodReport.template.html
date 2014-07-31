@@ -9,8 +9,9 @@
     <meta name="Vendor" content=""/>
 
     <!--Include SDK-->
-    <script type="text/javascript" src="https://rally1.rallydev.com/apps/1.29/sdk.js?debug=true"></script>
-
+    <script type="text/javascript" src="https://rally1.rallydev.com/apps/1.32/sdk.js?debug=true"></script>
+    <!--Include JQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="RallyGoodReport.js"></script>
 	<link rel="stylesheet" href="RallyGoodReport.css" type="text/css">
 
@@ -22,7 +23,7 @@
 	<div class="options-container">
 		<div class="options-block">
 			<p>Chart type: <span class="chart-options">
-				<select class="dropdown-menus">
+				<select class="dropdown-menus chart-option">
 					<option value="pie">Pie Chart</option>
 					<option value="bar">Bar Chart *COMING SOON*</option>
 					<option value="line">Line Chart *COMING SOON*</option>
@@ -53,11 +54,17 @@
 		</div>
 
 		<div class="options-block">
-			<button class="rally-good first" onclick="displayCategories()">Go!</button>
+			<button class="rally-good first" onclick="displayCategories()">DisplayCategories</button>
+		</div>
+			
+		<div class="chart-button">
+			<button class="btn-Generate-nav-chart">Go!</button>
+		</div>
+
+		<div class="charts">
+			<div></div>
 		</div>
 	</div>
-
-
 
 	<div id="categories" style="display: none;">
 		<h1 class="rally-good-title">Categorise by:</h1>
