@@ -18,6 +18,7 @@ function onLoad() {
                 }
     		}
     	},
+    	pieChart = null,
     	ShowPie = function(objectType, selectedAttribute) {
     		var rallyDataSource = new rally.sdk.data.RallyDataSource('__WORKSPACE_OID__',
                                '__PROJECT_OID__',
@@ -29,9 +30,9 @@ function onLoad() {
                     title : objectType + " by " + selectedAttribute,
                     height : 200,
                     width : 200
-                },
-                pieChart = new rally.sdk.ui.PieChart(pieConfig, rallyDataSource);
+                };
 
+			pieChart = new rally.sdk.ui.PieChart(pieConfig, rallyDataSource);
             pieChart.addEventListener("onSliceClick", GoodRallyReportHelpers.Events.ClickEvent.OnPieSliceClicked);
 	        pieChart.display(GoodRallyReportProperties.Consts.PIE_CHART);
     	},
@@ -39,7 +40,7 @@ function onLoad() {
     		var dialog = new rally.sdk.ui.basic.Dialog({ 
             	title: "Select a category",
 				width: 300, 
-				content: "	<div id='categories'><h1 class='rally-good-title'>Categorise by:</h1><select class='categories-dropdown'><option value='severity'>Severity</option><option value='priority'>Priority *COMING SOON*</option><option value='owner'>Owner *COMING SOON*</option></select></div>",
+				content: "<div id='categories'><h1 class='rally-good-title'>Categorise by:</h1><select class='categories-dropdown'><option value='severity'>Severity</option><option value='priority'>Priority *COMING SOON*</option><option value='owner'>Owner *COMING SOON*</option></select></div>",
                 closable: true,
                 buttons: [GoodRallyReportProperties.Consts.Buttons.GO_BTN]
 			});
@@ -85,12 +86,58 @@ function onLoad() {
                     OnDialogButtonClicked : function(dialog, eventArgs) {
                     	if (eventArgs.button === GoodRallyReportProperties.Consts.Buttons.GO_BTN) {
                     		// TODO:
+                    		var categorizedBy = $(".categories-dropdown").val();
+                    		pieChart.destroy();
+
+                    		$("#" + GoodRallyReportProperties.Consts.PIE_CHART).highcharts({
+        						chart: {
+            						plotBackgroundColor: null,
+            						plotBorderWidth: 1,//null,
+            						plotShadow: false
+        						},
+        						title: {
+            						text: 'Browser market shares at a specific website, 2014'
+        						},
+        						tooltip: {
+            						pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        						},
+							    plotOptions: {
+							        pie: {
+							            allowPointSelect: true,
+							            cursor: 'pointer',
+							            dataLabels: {
+							                enabled: true,
+							                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+							                style: {
+							                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+							                }
+							            }
+							        }
+							    },
+							    series: [{
+							        type: 'pie',
+							        name: 'Browser share',
+							        data: [
+							            ["Firefox",   45.0],
+							            ['IE',       26.8],
+							            {
+							                name: 'Chrome',
+							                y: 12.8,
+							                sliced: true,
+							                selected: true
+							            },
+							            ['Safari',    8.5],
+							            ['Opera',     6.2],
+							            ['Others',   0.7]
+							        ]
+							    }]
+							});
+							
                     	}
-                    	
                     	dialog.destroy();
                     }
                 }
-    		},
+    		}
 
     	};
 
