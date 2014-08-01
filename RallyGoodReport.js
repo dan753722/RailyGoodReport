@@ -35,6 +35,67 @@ function onLoad() {
             pieChart.addEventListener("onSliceClick", GoodRallyReportHelpers.Events.ClickEvent.OnPieSliceClicked);
 	        pieChart.display(GoodRallyReportProperties.Consts.PIE_CHART);
     	},
+    	ShowPieWithFiltering = function(objectType, selectedAttribute, selectedAttributeValue, categorization)
+        {
+            var rallyDataSource = new rally.sdk.data.RallyDataSource('18597073842',
+               '18937514918',
+               'false',
+               'true'),
+
+                pieConfig = {
+                    type : objectType,
+                    attribute : categorization,
+                    title : "BLANK",
+                    height : 200,
+                    width : 200
+                },
+
+                queryConfig = {
+                    type : objectType,
+                    key : "queryResults",
+                    //Query both object type and selected attribute value
+                    query : '(' + selectedAttribute + ' = "' + selectedAttributeValue + '")',
+                    fetch : true
+                },
+
+                queryCallBack = function(results)
+                {
+                    // Get the filtered query results from the callback
+                    var filteredResults         = results["queryResults"],
+                        categoryCount           = {},
+                        totalCount              = 0,
+                        highChartInputData      = [],
+                        highChartInputDataIndex = 0;
+
+                    for (var i = 0; i < filteredResults.length; i++)
+                    {
+
+                        var selectedObject = filteredResults[i];
+                        if (!(selectedObject.Severity in categoryCount))
+                        {
+                            //insert the severity value into category count
+                            categoryCount[selectedObject.Severity] = 1;
+                        }
+                        else
+                        {
+                            //increment the severity value in the category count
+                            categoryCount[selectedObject.Severity] = categoryCount[selectedObject.Severity] + 1;
+                        }
+                        totalCount++;
+                    }
+
+                    for (var key in categoryCount)
+                    {
+                        var percentageValue = (categoryCount[key] / totalCount) * 100;
+                        highChartInputData[highChartInputDataIndex] = [key, percentageValue];
+                        highChartInputDataIndex++;
+                    }
+
+                    // ADD HIGHCHART CALL HERE
+                };
+                rallyDataSource.findAll(queryConfig, queryCallBack);
+        },
+
     	displayCategories = function() {
     		var dialog = new rally.sdk.ui.basic.Dialog({ 
             	title: "Select a category",
