@@ -1,3 +1,8 @@
+@media print {
+    button.print {
+    	display: none;
+    }
+}
 .rallyGoodReport {
     /* Add app styles here */
 }
@@ -29,6 +34,17 @@
     	height: 100%;
     }
 
+    .titlebar {
+    	height: 100%;
+    	display: block;
+    }
+
+    span.titlebar {
+		right: 0px;
+		position: fixed;
+		padding: 18px 15px 0 0;
+    }
+
     button {
     	display: inline-block;
     	color: white;
@@ -57,10 +73,6 @@
     select {
     	height: 25px;
     	background: #F4F4F4;
-    }
-
-    option {
-    	line-height: 25px;
     }
 
     select.categories-dropdown {
