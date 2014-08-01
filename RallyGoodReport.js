@@ -146,12 +146,11 @@ function onLoad() {
                     },
                     OnDialogButtonClicked : function(dialog, eventArgs) {
                     	if (eventArgs.button === GoodRallyReportProperties.Consts.Buttons.GO_BTN) {
-                    		// TODO:
                     		var categorizedBy = $(".categories-dropdown").val();
                     		pieChart.destroy();
-
-                    		$("#" + GoodRallyReportProperties.Consts.PIE_CHART).highcharts({
+                    		var chart = new Highcharts.Chart({
         						chart: {
+        							renderTo: GoodRallyReportProperties.Consts.PIE_CHART,
             						plotBackgroundColor: null,
             						plotBorderWidth: 1,//null,
             						plotShadow: false
