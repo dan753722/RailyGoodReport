@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>RailyGoodReport</title>
+
+    <!--App information-->
+    <meta name="Name" content="App: RailyGoodReport"/>
+    <meta name="Version" content="1.0"/>
+    <meta name="Vendor" content=""/>
+
+    <!--Include SDK-->
+    <script type="text/javascript" src="/apps/1.32/sdk.js"></script>
+    <!--Include JQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+        function onLoad() {
+            //Add app code here
+            var self = this,
+            	GoodRallyReportProperties = {
+            		Consts : {
+            			PIE_CHART : "pieChartDiv",
+            			ChartOptions : {
+        	    			PIE  	  : "pie",
+            				BAR 	  : "bar",
+            				LINE 	  : "line",
+            				BURN_DOWN : "burndown"
+            			},
+                        Attributes : {
+                            STATE : "State"
+                        }
+            		}
+            	},
+        
+            	ShowPie = function(objectType, selectedAttribute) {
+            		var rallyDataSource = new rally.sdk.data.RallyDataSource('__WORKSPACE_OID__',
+                                       '__PROJECT_OID__',
+                                       '__PROJECT_SCOPING_UP__',
+                                       '__PROJECT_SCOPING_DOWN__'),
+               		    pieConfig = {
+                            type : objectType,
+                            attribute: selectedAttribute,
+                            title : objectType + " by " + selectedAttribute,
+                            height : 200,
+                            width : 200
+                        };
+            	},
+        
+        
+                ShowPieWithFiltering = function(objectType, selectedAttribute, selectedAttributeValue, categorization)
+                {
+                    var rallyDataSource = new rally.sdk.data.RallyDataSource('__WORKSPACE_OID__',
+                       '__PROJECT_OID__',
+                       '__PROJECT_SCOPING_UP__',
+                       '__PROJECT_SCOPING_DOWN__'),
+        
+                        pieConfig = {
+                            type : objectType,
+                            attribute : categorization,
+                            title : "BLANK",
+                            height : 200,
+                            width : 200
+                        },
+        
+                        queryConfig = {
+                            type : objectType,
+                            key : "queryResults",
+                            //Query both object type and selected attribute value
+                            query : '(' + selectedAttribute + ' = "' + selectedAttributeValue + '")',
+                            fetch : true
+                        },
+        
+                        queryCallBack = function(results)
+                        {
+                            // Get the filtered query results from the callback
+                            var filteredResults         = results["queryResults"],
+                                categoryCount           = {},
+                                totalCount              = 0,
+                                highChartInputData      = [],
+                                highChartInputDataIndex = 0;
+                            for (var i = 0; i < filteredResults.length; i++)
+                            {
+        
+                                var selectedObject = filteredResults[i];
+                                if (!(selectedObject.Severity in categoryCount))
+                                {
+                                    //insert the severity value into category count
+                                    categoryCount[selectedObject.Severity] = 1;
+                                }
+                                else
+                                {
+                                    //increment the severity value in the category count
+                                    categoryCount[selectedObject.Severity] = categoryCount[selectedObject.Severity] + 1;
+                                }
+                                totalCount++;
+                            }
+        
+                            
+        
+                            for (var key in categoryCount)
+                            {
+                                var percentageValue = (categoryCount[key] / totalCount) * 100;
+                                highChartInputData[highChartInputDataIndex] = [key, percentageValue];
+                                highChartInputDataIndex++;
+                            }
+        
+        
+        
+                            categorizedResults = categorizedResults(results, categorizedby);
+                            //var pie = initiateHighChart(categorizedResults;
+                            //pie.display();
+                        };
+                        rallyDataSource.findAll(queryConfig, queryCallBack);
+                },
+        
+        
+        	 	GoodRallyReportHelpers = {
+            		Helpers : {
+        				GenerateNavPie: function() {
+            					$(".charts div").addClass(GoodRallyReportProperties.Consts.PIE_CHART)
+            									.attr("id", GoodRallyReportProperties.Consts.PIE_CHART);
+        
+            					//ShowPie($(".object-type-option").val(), GoodRallyReportProperties.Consts.Attributes.STATE);
+                                ShowPieWithFiltering($(".object-type-option").val(), GoodRallyReportProperties.Consts.Attributes.STATE, "Open", "Priority");
+            			}
+            		},
+            		Events : {
+            			ButtonEvent : {
+            				GenerateNavChartClicked : function() {
+            					var chartType = $(".chart-option").val();
+            					if (chartType === GoodRallyReportProperties.Consts.ChartOptions.PIE) {
+            						GoodRallyReportHelpers.Helpers.GenerateNavPie();
+            					}
+        
+            					if (chartType === GoodRallyReportProperties.Consts.ChartOptions.BAR) {
+        
+            					}
+        
+            					if (chartType === GoodRallyReportProperties.Consts.ChartOptions.LINE) {
+        
+            					}
+        
+            					if (chartType === GoodRallyReportProperties.Consts.ChartOptions.BURN_DOWN) {
+        
+            					}
+            				}
+            			}
+            		}
+            	};
+        
+            $(".btn-Generate-nav-chart").click(GoodRallyReportHelpers.Events.ButtonEvent.GenerateNavChartClicked);
+        }
+        
+        rally.addOnLoad(onLoad);
+    
+
+    
+    </script>
+
+    <style type="text/css">
+
+        .rallyGoodReport {
+            /* Add app styles here */
+        }
+        
+        
+        	/* MOVE ALL BELOW INTO THE DIV ABOVE AFTER FINISHING */
+        
+            h1.rally-good-title {
+            	font-family: NotoSans,Helvetica,Arial;
+            	font-size: 22px;
+            	text-align: center;
+            }
+        
+            .options-container {
+            	margin: 0 auto;
+            	width: 900px;
+            }
+        
+            .options-block {
+            	float: left;
+            	margin: 0 10px;
+            }
+    
+    </style>
+
+
+</head>
+<body class="rallyGoodReport">
+
+	<h1 class="rally-good-title">Rally Good Reports</h1>
+
+	<div class="options-container">
+		<div class="options-block">
+			<p>Chart type: <span class="chart-options">
+				<select class="dropdown-menus chart-option">
+					<option value="pie">Pie Chart</option>
+					<option value="bar">Bar Chart *COMING SOON*</option>
+					<option value="line">Line Chart *COMING SOON*</option>
+					<option value="burndown">Burndown *COMING SOON*</option>
+				</select>
+			</span></p>
+		</div>
+
+		<div class="options-block">
+			<p>Object: <span class="options">
+				<select class="dropdown-menus object-type-option">
+					<option value="defects">Defects</option>
+					<option value="user-story">User Stories *COMING SOON*</option>
+					<option value="builds">Builds *COMING SOON*</option>
+					<option value="tasks">Tasks *COMING SOON*</option>
+				</select>
+			</span></p>
+		</div>
+
+		<div class="options-block">
+			<p>Scope: <span class="options">
+				<select class="dropdown-menus">
+					<option value="this-sprint">This Sprint</option>
+					<option value="sprint1">PSI 2 Sprint 1 *COMING SOON*</option>
+					<option value="sprint2">PSI 2 Sprint 2 *COMING SOON*</option>
+				</select>
+			</span></p>
+		</div>
+
+		<div class="chart-button">
+			<button class="btn-Generate-nav-chart">Go!</button>
+		</div>
+
+		<div class="charts">
+			<div></div>
+		</div>
+
+	</div>
+
+</body>
+</html>
